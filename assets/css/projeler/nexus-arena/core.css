@@ -1,0 +1,285 @@
+/* ==========================================================================
+   NEXUS ARENA · Ortak tasarım sistemi
+   Site ve admin paneli birlikte kullanır: renkler, yazı tipleri, temel parçalar.
+   ========================================================================== */
+
+:root {
+  --bg: #0b0b0c;
+  --bg-raise: #131315;
+  --ink: #edede8;
+  --ink-dim: #8d8d88;
+  --ink-faint: #4b4b48;
+  --line: rgb(237 237 232 / 0.12);
+  --volt: #d7ff3a;
+  --volt-ink: #0b0b0c;
+
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --gutter: clamp(16px, 2.6vw, 40px);
+  --gap: clamp(16px, 2vw, 32px);
+  --header-h: 72px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+
+  color-scheme: dark;
+}
+
+/* ---------- Temel ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+code {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--volt);
+  color: var(--volt-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--volt);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 300;
+  padding: 10px 16px;
+  background: var(--volt);
+  color: var(--volt-ink);
+  border-radius: 999px;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.3s var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- Ortak parçalar ---------- */
+
+.pulse {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--volt);
+  box-shadow: 0 0 0 0 rgb(215 255 58 / 0.55);
+  animation: pulse 2.2s var(--ease-out) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(215 255 58 / 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgb(215 255 58 / 0);
+  }
+}
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  font: 600 0.9rem/1 var(--font-body);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--volt {
+  background: var(--volt);
+  color: var(--volt-ink);
+}
+
+.btn--volt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease-out);
+}
+
+.btn--volt:hover::before {
+  transform: translateY(0);
+}
+
+.btn--lg {
+  height: 58px;
+  padding: 0 30px;
+  font-size: 1rem;
+}
+
+.btn__icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.55s var(--ease-out);
+}
+
+.btn:hover .btn__icon {
+  transform: translateX(4px);
+}
+
+/* Üzerine gelince yazı yukarı kayar, kopyası alttan gelir.
+   Kullanım: <span class="roll" data-text="Metin"><span>Metin</span></span> */
+.roll {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.25;
+  vertical-align: middle;
+}
+
+.roll > span,
+.roll::after {
+  display: block;
+  transition: transform 0.55s var(--ease-out);
+}
+
+.roll::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+
+:is(a, button):hover > .roll > span {
+  transform: translateY(-100%);
+}
+:is(a, button):hover > .roll::after {
+  transform: translateY(0);
+}
+
+.link-roll {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+}
+.link-roll--muted {
+  color: var(--ink-dim);
+  transition: color 0.3s;
+}
+.link-roll--muted:hover {
+  color: var(--ink);
+}
+
+/* ---------- Logo ---------- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.brand__mark {
+  width: 12px;
+  height: 12px;
+  background: var(--volt);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 70%, 30% 70%, 30% 30%, 0 30%);
+}
+
+.brand__slash {
+  color: var(--volt);
+  margin: 0 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

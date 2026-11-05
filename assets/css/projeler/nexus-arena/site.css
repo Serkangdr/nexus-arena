@@ -1,0 +1,1957 @@
+/* ==========================================================================
+   NEXUS ARENA · Ziyaretçi sitesi
+   Ortak parçalar core.css içinde.
+   ========================================================================== */
+
+/* ---------- Doku ve kaydırma ---------- */
+
+/* Film greni: tüm sayfanın üstünde çok hafif bir doku. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.1s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4%, 3%);
+  }
+  40% {
+    transform: translate(3%, -5%);
+  }
+  60% {
+    transform: translate(-6%, -2%);
+  }
+  80% {
+    transform: translate(5%, 4%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Lenis (yumuşak kaydırma) için gerekli kurallar */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ---------- Açılış ekranı ---------- */
+
+.loader {
+  display: none;
+}
+
+.js .loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px var(--gutter);
+  background: var(--bg);
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.loader__row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-dim);
+}
+
+.loader__count {
+  align-self: flex-end;
+  font-weight: 800;
+  font-stretch: 70%;
+  font-size: clamp(7rem, 30vw, 26rem);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.loader__bar {
+  height: 2px;
+  background: var(--line);
+}
+
+.loader__bar span {
+  display: block;
+  height: 100%;
+  background: var(--volt);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ---------- Üst menü ---------- */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid transparent;
+  transition:
+    transform 0.7s var(--ease-out),
+    background-color 0.4s,
+    border-color 0.4s,
+    backdrop-filter 0.4s;
+}
+
+.site-header.is-scrolled {
+  background: rgb(11 11 12 / 0.7);
+  border-color: var(--line);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+.site-nav {
+  display: flex;
+  gap: 28px;
+  margin-left: auto;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+  transition: color 0.3s;
+}
+
+.site-nav a span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ink-faint);
+  transition: color 0.3s;
+}
+.site-nav a:hover {
+  color: var(--ink);
+}
+.site-nav a:hover span {
+  color: var(--volt);
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-dim);
+}
+.header-status strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 20px) var(--gutter) 28px;
+  overflow: hidden;
+}
+
+.hero__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* WebGL yoksa da boş görünmesin */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 55% at 50% 75%, rgb(215 255 58 / 0.08), transparent 70%);
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--bg) 0%,
+      rgb(11 11 12 / 0) 26%,
+      rgb(11 11 12 / 0) 62%,
+      rgb(11 11 12 / 0.85) 92%,
+      var(--bg) 100%
+    ),
+    radial-gradient(120% 90% at 50% 60%, transparent 55%, rgb(11 11 12 / 0.9) 100%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 32px;
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--ink-dim);
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__scroll span {
+  position: relative;
+  width: 40px;
+  height: 1px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.hero__scroll span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--volt);
+  animation: scroll-hint 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes scroll-hint {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.hero__title {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(2.6rem, 10.2vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.hero__line {
+  display: block;
+}
+
+/* Giriş animasyonunda harfler satır maskesinin altından yükselir.
+   Geniş dikey boşluk Ü, Ş, İ gibi harflerin işaretleri kesilmesin diye. */
+.hero__title .split-line-mask {
+  padding-block: 0.22em;
+  margin-block: -0.22em;
+}
+
+.hero__line--end {
+  align-self: flex-end;
+  text-align: right;
+  color: var(--volt);
+}
+
+.js .hero__title {
+  visibility: hidden;
+}
+
+.hero__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 32px 64px;
+}
+
+.hero__copy {
+  display: grid;
+  gap: 28px;
+  max-width: 460px;
+}
+
+.hero__lead {
+  color: var(--ink-dim);
+  max-width: 38ch;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(var(--hud-items, 4), minmax(110px, 1fr));
+  gap: 0 18px;
+  min-width: min(580px, 100%);
+}
+
+.hud__item {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.hud dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.hud dd {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud__dim {
+  color: var(--ink-faint);
+}
+
+/* ---------- Bölüm başlıkları ---------- */
+
+.section {
+  position: relative;
+  padding: clamp(110px, 14vw, 220px) var(--gutter);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 28px var(--gap);
+  margin-bottom: clamp(56px, 9vw, 140px);
+}
+
+.section-head__index {
+  grid-column: 1 / span 2;
+  color: var(--volt);
+  padding-top: 0.9em;
+}
+
+.section-title {
+  grid-column: 3 / -1;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(2.4rem, 7.4vw, 8.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.section-intro {
+  grid-column: 8 / -1;
+  max-width: 44ch;
+  color: var(--ink-dim);
+}
+
+/* SplitText satır maskeleri: aksanlar kesilmesin */
+.split-line-mask {
+  padding-block: 0.1em;
+  margin-block: -0.1em;
+}
+
+/* ---------- Donanım ---------- */
+
+.tier {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 0 var(--gap);
+  border-top: 1px solid var(--line);
+}
+
+.tier + .tier {
+  margin-top: clamp(80px, 10vw, 160px);
+}
+
+.tier__stage-inner {
+  position: sticky;
+  top: var(--header-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  height: calc(100svh - var(--header-h));
+  padding: 40px 0;
+}
+
+.tier__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--volt);
+}
+
+.tier__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--volt);
+  transform: rotate(45deg);
+}
+
+.tier__name {
+  font-weight: 700;
+  font-stretch: 125%;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.tier__readout {
+  display: grid;
+  gap: 14px;
+  margin-block: auto;
+}
+
+.tier__figure {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: clamp(3.5rem, 8.6vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.tier__detail {
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+  text-transform: none;
+}
+
+.tier__meter {
+  width: 100%;
+  max-width: 380px;
+  height: 2px;
+  background: var(--line);
+}
+
+.tier__meter span {
+  display: block;
+  height: 100%;
+  background: var(--volt);
+  transform: scaleX(var(--progress, 0.33));
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-out);
+}
+
+.tier__count {
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.spec {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  min-height: 78svh;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.7s var(--ease-out);
+}
+
+.spec:last-child {
+  border-bottom: 0;
+}
+
+.spec__cat {
+  color: var(--ink-dim);
+}
+
+.spec__figure {
+  display: none;
+}
+
+.spec__title {
+  font-weight: 700;
+  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+}
+
+.spec__desc {
+  max-width: 42ch;
+  color: var(--ink-dim);
+}
+
+/* JS etkinse kaydırırken sadece aktif kalem parlak görünür */
+.tier.is-interactive .spec {
+  opacity: 0.22;
+}
+.tier.is-interactive .spec.is-active {
+  opacity: 1;
+}
+
+.gear {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 28px var(--gap);
+  margin-top: clamp(96px, 12vw, 180px);
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.gear__label {
+  grid-column: 1 / span 4;
+  color: var(--volt);
+}
+
+.gear__list {
+  grid-column: 6 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.gear__item {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.gear__item .mono {
+  color: var(--ink-dim);
+}
+
+.gear__name {
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.4vw, 2.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.gear__detail {
+  color: var(--ink-dim);
+}
+
+/* ---------- Oyunlar ---------- */
+
+.games {
+  padding-inline: 0;
+  overflow: hidden;
+}
+.games .section-head {
+  padding-inline: var(--gutter);
+}
+
+.marquee {
+  overflow: hidden;
+  padding-block: clamp(10px, 1.6vw, 22px);
+  border-top: 1px solid var(--line);
+}
+
+.marquee + .marquee {
+  border-bottom: 1px solid var(--line);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding-right: 0.4em;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(2.8rem, 8.6vw, 10rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marquee__item > span {
+  transition:
+    color 0.35s,
+    -webkit-text-stroke-color 0.35s;
+}
+.marquee__item:hover > span {
+  color: var(--volt);
+}
+
+.marquee--outline .marquee__item {
+  font-stretch: 66%;
+  letter-spacing: -0.01em;
+}
+
+.marquee--outline .marquee__item > span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(237 237 232 / 0.4);
+}
+
+.marquee--outline .marquee__item:hover > span {
+  color: var(--volt);
+  -webkit-text-stroke-color: var(--volt);
+}
+
+.marquee__sep {
+  flex-shrink: 0;
+  width: 0.14em;
+  height: 0.14em;
+  background: var(--volt);
+  transform: rotate(45deg);
+}
+
+/* ---------- Fiyatlar ---------- */
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.price-card {
+  display: grid;
+  align-content: start;
+  gap: 28px;
+  padding: clamp(28px, 4vw, 56px) clamp(0px, 3vw, 48px) clamp(28px, 4vw, 56px) 0;
+}
+
+.price-card + .price-card {
+  padding-left: clamp(0px, 3vw, 48px);
+  border-left: 1px solid var(--line);
+}
+
+.price-card__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--volt);
+}
+
+.price-card__name {
+  margin-top: 12px;
+  font-weight: 700;
+  font-stretch: 125%;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.price-card__rate {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.price-card__figure {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: clamp(5rem, 12vw, 13rem);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.price-card__unit {
+  color: var(--ink-dim);
+}
+
+.price-card__subhead {
+  color: var(--ink-dim);
+  padding-bottom: 4px;
+}
+
+.packages {
+  border-top: 1px solid var(--line);
+}
+
+.package {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding 0.5s var(--ease-out);
+}
+
+/* Üzerine gelince satır volt bir çizgiyle vurgulanır ve hafifçe içeri kayar */
+.package::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--volt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.package:hover {
+  padding-left: 10px;
+}
+.package:hover::before {
+  transform: scaleX(1);
+}
+
+.package__name {
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  letter-spacing: -0.01em;
+}
+
+.package__leader {
+  flex: 1;
+  min-width: 24px;
+  border-bottom: 1px dotted var(--ink-faint);
+  transform: translateY(-4px);
+}
+
+.package__duration {
+  color: var(--ink-dim);
+}
+
+.package__saving {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgb(215 255 58 / 0.12);
+  color: var(--volt);
+  font-size: 0.64rem;
+}
+
+.package__price {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+
+.package:hover .package__price {
+  color: var(--volt);
+}
+
+/* ---------- Rezervasyon ---------- */
+
+/* overflow: hidden, sağdaki özet kartının yapışkan (sticky) davranışını bozar; clip bozmaz. */
+.booking {
+  --danger: #ff6f5e;
+  overflow-x: clip;
+}
+
+.booking::before {
+  content: '';
+  position: absolute;
+  inset: 0 -10% auto;
+  height: 80%;
+  z-index: -1;
+  background: radial-gradient(45% 50% at 70% 30%, rgb(215 255 58 / 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.booking__head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 28px var(--gap);
+  align-items: end;
+  margin-bottom: clamp(56px, 8vw, 120px);
+}
+
+.booking__index {
+  grid-column: 1 / -1;
+  color: var(--volt);
+}
+
+.booking__title {
+  grid-column: 1 / span 8;
+  display: flex;
+  flex-direction: column;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(3.6rem, 13vw, 15rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.booking__title span:last-child {
+  padding-left: 0.55em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+
+.booking__intro {
+  grid-column: 9 / -1;
+  max-width: 34ch;
+  color: var(--ink-dim);
+  padding-bottom: 0.6em;
+}
+
+.booking-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+.booking-form__steps {
+  display: grid;
+  gap: clamp(40px, 5vw, 64px);
+  min-width: 0;
+}
+
+.booking-step {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  margin: 0;
+  padding: 22px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* Kayan legend, fieldset kenarlığını kesmeden normal bir başlık gibi yerleşir. */
+.booking-step__legend {
+  float: left;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 0;
+  font-weight: 700;
+  font-stretch: 125%;
+  font-size: clamp(1.2rem, 1.9vw, 1.7rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.booking-step__legend .mono {
+  color: var(--volt);
+}
+
+.booking-step__hint {
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+}
+.booking-step__hint strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.booking-step__hint.is-full {
+  color: var(--danger);
+}
+
+/* Seçenek kartları: radyo düğmesi gizli ama klavyeyle seçilebilir. */
+.booking-choice {
+  position: relative;
+  cursor: pointer;
+}
+
+.booking-choice input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.booking-choice:has(input:focus-visible) {
+  outline: 2px solid var(--volt);
+  outline-offset: 3px;
+}
+
+.booking-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 12px;
+}
+
+.booking-tier {
+  display: grid;
+  gap: 6px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgb(237 237 232 / 0.02);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    transform 0.5s var(--ease-out);
+}
+
+.booking-tier::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--ink-faint);
+  border-radius: 50%;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background-color 0.3s;
+}
+
+.booking-tier:hover {
+  border-color: rgb(237 237 232 / 0.28);
+}
+
+.booking-tier:has(input:checked) {
+  border-color: var(--volt);
+  background: linear-gradient(150deg, rgb(215 255 58 / 0.1), transparent 70%);
+}
+
+.booking-tier:has(input:checked)::after {
+  border-color: var(--volt);
+  background: var(--volt);
+  box-shadow: inset 0 0 0 3px var(--bg);
+}
+
+.booking-tier__label {
+  color: var(--volt);
+  padding-right: 28px;
+}
+.booking-tier__name {
+  font-weight: 700;
+  font-stretch: 112%;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+.booking-tier__meta {
+  color: var(--ink-dim);
+}
+
+.booking-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.booking-day {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 14px 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-align: center;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.booking-day:hover {
+  border-color: rgb(237 237 232 / 0.28);
+}
+
+.booking-day__name,
+.booking-day__month {
+  color: var(--ink-dim);
+  font-size: 0.6rem;
+  transition: color 0.3s;
+}
+
+.booking-day__num {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: 2.3rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.booking-day:has(input:checked) {
+  border-color: var(--volt);
+  background: var(--volt);
+  color: var(--volt-ink);
+}
+.booking-day:has(input:checked) :is(.booking-day__name, .booking-day__month) {
+  color: var(--volt-ink);
+}
+
+.booking-day:has(input:disabled) {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.booking-day:has(input:disabled):hover {
+  border-color: var(--line);
+}
+
+.booking-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.booking-field {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+}
+.booking-field__label {
+  color: var(--ink-dim);
+}
+.booking-field__label em {
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-faint);
+}
+
+.booking-input {
+  width: 100%;
+  height: 58px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgb(237 237 232 / 0.03);
+  color: var(--ink);
+  font: 500 1.05rem var(--font-body);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background-color 0.25s;
+}
+
+.booking-input::placeholder {
+  color: var(--ink-faint);
+}
+.booking-input:hover {
+  border-color: rgb(237 237 232 / 0.28);
+}
+.booking-input:focus {
+  outline: none;
+  border-color: var(--volt);
+  box-shadow: 0 0 0 3px rgb(215 255 58 / 0.14);
+  background: rgb(237 237 232 / 0.05);
+}
+.booking-input.input-validation-error {
+  border-color: var(--danger);
+}
+.booking-input--area {
+  height: auto;
+  min-height: 104px;
+  padding: 14px 18px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.booking-select {
+  position: relative;
+  display: block;
+}
+
+.booking-select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--ink-dim);
+  border-bottom: 1.5px solid var(--ink-dim);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.booking-select select {
+  appearance: none;
+  padding-right: 48px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.booking-select option {
+  background: var(--bg-raise);
+  color: var(--ink);
+}
+.booking-select option:disabled {
+  color: var(--ink-faint);
+}
+
+.booking-error {
+  color: var(--danger);
+  font-size: 0.86rem;
+}
+.booking-error:empty {
+  display: none;
+}
+
+.booking-alert {
+  padding: 14px 18px;
+  border: 1px solid rgb(255 111 94 / 0.4);
+  border-radius: 14px;
+  background: rgb(255 111 94 / 0.08);
+  color: #ffc2ba;
+}
+
+/* Bot tuzağı */
+.booking-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Talep özeti: bilet görünümünde, kaydırırken yanda sabit */
+.booking-ticket {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: grid;
+  gap: 22px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgb(215 255 58 / 0.07), transparent 55%), var(--bg-raise);
+}
+
+.booking-ticket::before,
+.booking-ticket::after {
+  content: '';
+  position: absolute;
+  top: 64px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.booking-ticket::before {
+  left: -12px;
+  clip-path: inset(0 0 0 50%);
+}
+.booking-ticket::after {
+  right: -12px;
+  clip-path: inset(0 50% 0 0);
+}
+
+.booking-ticket__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink-dim);
+}
+.booking-ticket__free {
+  color: var(--volt);
+}
+.booking-ticket__free.is-full {
+  color: var(--danger);
+}
+
+.booking-ticket__rows {
+  display: grid;
+}
+.booking-ticket__rows div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.booking-ticket__rows dt {
+  color: var(--ink-dim);
+  flex-shrink: 0;
+}
+.booking-ticket__rows dd {
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.booking-ticket__price {
+  border-bottom: 0 !important;
+}
+.booking-ticket__price dd {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--volt);
+}
+
+.booking-ticket__note {
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}
+
+.booking-submit {
+  position: relative;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 170px;
+  aspect-ratio: 1;
+  margin: 18px 0 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--volt-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.booking-submit__ring {
+  position: absolute;
+  inset: -14%;
+  width: 128%;
+  height: 128%;
+  max-width: none;
+  animation: spin 22s linear infinite;
+  fill: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.booking-submit__disc {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--volt);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.15;
+  text-transform: uppercase;
+  transition:
+    transform 0.6s var(--ease-out),
+    background-color 0.4s;
+}
+
+.booking-submit__disc svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.booking-submit:hover .booking-submit__disc {
+  transform: scale(0.92);
+  background: var(--ink);
+}
+.booking-submit:hover .booking-submit__disc svg {
+  transform: rotate(45deg);
+}
+
+.booking-submit.is-loading {
+  cursor: progress;
+}
+.booking-submit.is-loading .booking-submit__disc {
+  animation: booking-wait 1.1s var(--ease-in-out) infinite;
+}
+.booking-submit.is-loading .booking-submit__ring {
+  animation-duration: 3s;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes booking-wait {
+  50% {
+    transform: scale(0.88);
+  }
+}
+
+.booking-closed {
+  color: var(--ink-dim);
+  max-width: 44ch;
+}
+
+/* Gönderim sonrası onay */
+.booking-done {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: 28px clamp(40px, 6vw, 96px);
+  align-items: start;
+  outline: none;
+}
+
+.booking-done > :not(.booking-done__ticket) {
+  grid-column: 1;
+}
+
+.booking-done__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--volt);
+}
+
+.booking-done__title {
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(2.4rem, 6vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+.booking-done__lead {
+  max-width: 46ch;
+  color: var(--ink-dim);
+}
+.booking-done__lead strong {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.booking-done__ticket {
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--volt);
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgb(215 255 58 / 0.1), transparent 60%), var(--bg-raise);
+}
+
+.booking-done__code {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--line);
+}
+.booking-done__code .mono {
+  color: var(--ink-dim);
+}
+
+.booking-done__code strong {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--volt);
+}
+
+.booking-done__rows {
+  display: grid;
+}
+.booking-done__rows div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+.booking-done__rows div:last-child {
+  border-bottom: 0;
+}
+.booking-done__rows dt {
+  color: var(--ink-dim);
+}
+.booking-done__rows dd {
+  font-weight: 600;
+  text-align: right;
+}
+
+.booking-done__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  padding-top: 8px;
+}
+.booking-done__hint {
+  color: var(--ink-faint);
+}
+
+/* Rezervasyon durum sayfası */
+.ticket-page {
+  display: grid;
+  align-content: center;
+  gap: 28px;
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + 40px);
+}
+
+.ticket-page__eyebrow {
+  color: var(--ink-dim);
+}
+
+.ticket-page__title {
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(3rem, 10vw, 10rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--volt);
+}
+
+.ticket-page__title.is-muted {
+  color: var(--ink-dim);
+}
+
+.ticket-page__text {
+  max-width: 46ch;
+  color: var(--ink-dim);
+}
+
+.ticket-page__rows {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.ticket-page__rows div {
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ticket-page__rows dt {
+  color: var(--ink-dim);
+}
+.ticket-page__rows dd {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.ticket-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+}
+
+/* ---------- Alt bilgi ---------- */
+
+.site-footer {
+  padding: 72px var(--gutter) 0;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 32px var(--gap);
+  align-items: start;
+}
+
+.footer-brand {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 10px;
+  color: var(--ink-dim);
+}
+.footer-brand .mono {
+  color: var(--volt);
+}
+
+.footer-links {
+  grid-column: 6 / span 4;
+  display: grid;
+  gap: 6px;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.footer-copy {
+  grid-column: 10 / -1;
+  justify-self: end;
+  color: var(--ink-faint);
+}
+
+.footer-mark {
+  margin-top: clamp(64px, 10vw, 140px);
+  font-weight: 800;
+  font-stretch: 125%;
+  /* "Nexus Arena" (11 harf) için 10.2vw; ad değişirse uzunluğa göre ölçeklenir. */
+  font-size: min(calc(112vw / var(--chars, 11)), 24vw);
+  line-height: 0.74;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  transform: translateY(6%);
+}
+
+.error-page {
+  min-height: 80svh;
+  display: grid;
+  align-content: center;
+  gap: 28px;
+}
+.error-page .section-title,
+.error-page .section-intro {
+  grid-column: auto;
+}
+
+.status-page {
+  display: grid;
+  align-content: center;
+  gap: 28px;
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + 40px);
+}
+
+.status-page__code {
+  font-weight: 800;
+  font-stretch: 66%;
+  font-size: clamp(9rem, 38vw, 34rem);
+  line-height: 0.78;
+  letter-spacing: -0.03em;
+  color: var(--volt);
+}
+
+.status-page__title {
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(1.8rem, 4vw, 3.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.status-page__text {
+  max-width: 44ch;
+  color: var(--ink-dim);
+}
+
+/* ---------- Mobil menü ---------- */
+
+.menu-toggle {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgb(11 11 12 / 0.5);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.menu-toggle__lines {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 8px;
+}
+
+.menu-toggle__lines span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition:
+    transform 0.5s var(--ease-out),
+    top 0.5s var(--ease-out);
+}
+
+.menu-toggle__lines span:first-child {
+  top: 0;
+}
+.menu-toggle__lines span:last-child {
+  top: 100%;
+}
+
+.menu-open .menu-toggle__lines span {
+  top: 50%;
+}
+.menu-open .menu-toggle__lines span:first-child {
+  transform: rotate(45deg);
+}
+.menu-open .menu-toggle__lines span:last-child {
+  transform: rotate(-45deg);
+}
+
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding: calc(var(--header-h) + 32px) var(--gutter) 32px;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.site-menu[hidden] {
+  display: none;
+}
+
+.site-menu__nav ol {
+  display: grid;
+}
+
+.site-menu__nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-menu__index {
+  color: var(--volt);
+  min-width: 2.2em;
+}
+
+.site-menu__mask {
+  display: block;
+  overflow: clip;
+  padding-block: 0.12em;
+  margin-block: -0.12em;
+}
+
+.site-menu__label {
+  display: block;
+  font-weight: 800;
+  /* "Rezervasyon" 375px genişlikte de sığsın diye biraz daha dar ve küçük */
+  font-stretch: 112%;
+  font-size: clamp(2rem, 9vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.site-menu__nav a:active .site-menu__label {
+  color: var(--volt);
+}
+
+.site-menu__foot {
+  display: grid;
+  gap: 18px;
+  color: var(--ink-dim);
+}
+.site-menu__foot .mono {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.site-menu__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.menu-open .site-header {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+}
+.menu-open .header-status {
+  visibility: hidden;
+}
+
+/* ---------- İmleç ---------- */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cursor.is-visible {
+  opacity: 1;
+}
+
+.cursor__ring {
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgb(237 237 232 / 0.55);
+  border-radius: 50%;
+  transition:
+    transform 0.5s var(--ease-out),
+    background-color 0.4s,
+    border-color 0.4s;
+}
+
+.cursor.is-hover .cursor__ring {
+  transform: scale(1.9);
+  background: rgb(215 255 58 / 0.12);
+  border-color: var(--volt);
+}
+
+@media (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
+
+/* ---------- Duyarlı yerleşim ---------- */
+
+@media (min-width: 1101px) {
+  .site-menu {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .site-nav {
+    display: none;
+  }
+  .header-status {
+    margin-left: auto;
+  }
+  .js .menu-toggle {
+    display: grid;
+  }
+  .site-header {
+    gap: 12px;
+  }
+  .header-cta {
+    margin-left: auto;
+  }
+  .header-status + .header-cta {
+    margin-left: 0;
+  }
+  .hero__foot {
+    grid-template-columns: 1fr;
+  }
+  .hud {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .section-head {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .section-head__index,
+  .section-title,
+  .section-intro {
+    grid-column: auto;
+    padding-top: 0;
+  }
+
+  .tier {
+    grid-template-columns: 1fr;
+  }
+  .tier__stage-inner {
+    position: static;
+    height: auto;
+    padding: 32px 0 8px;
+  }
+  .tier__readout,
+  .tier__meter,
+  .tier__count {
+    display: none;
+  }
+  .tier.is-interactive .spec {
+    opacity: 1;
+  }
+
+  .spec {
+    min-height: 0;
+    padding: 40px 0;
+  }
+  .spec__figure {
+    display: block;
+    font-weight: 800;
+    font-stretch: 66%;
+    font-size: clamp(3.4rem, 17vw, 7rem);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .gear {
+    grid-template-columns: 1fr;
+  }
+  .gear__label,
+  .gear__list {
+    grid-column: auto;
+  }
+
+  .price-card + .price-card {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .price-card {
+    padding-right: 0;
+  }
+
+  .booking__head {
+    grid-template-columns: 1fr;
+  }
+  .booking__title,
+  .booking__intro {
+    grid-column: auto;
+  }
+  .booking-form,
+  .booking-done {
+    grid-template-columns: 1fr;
+  }
+  .booking-ticket {
+    position: relative;
+    top: auto;
+  }
+  .booking-done__ticket {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .footer-links {
+    grid-column: 1;
+  }
+  .footer-copy {
+    grid-column: 2;
+    align-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-h: 64px;
+  }
+  .header-status {
+    display: none;
+  }
+  .site-header .header-cta {
+    margin-left: auto;
+  }
+  .package {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .package__leader {
+    display: none;
+  }
+  .package__price {
+    margin-left: auto;
+  }
+  .hero__top .hero__scroll {
+    display: none;
+  }
+  .hero__title {
+    font-size: 17vw;
+    line-height: 0.88;
+  }
+  .hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 16px;
+  }
+  .gear__list {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .booking__title {
+    font-size: 19vw;
+  }
+  .booking__title span:last-child {
+    padding-left: 0;
+  }
+  .booking-days {
+    display: flex;
+    overflow-x: auto;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 2px var(--gutter) 6px;
+    scrollbar-width: none;
+  }
+  .booking-day {
+    flex: 0 0 68px;
+  }
+  .booking-pair {
+    grid-template-columns: 1fr;
+  }
+  .booking-ticket {
+    padding: 22px;
+  }
+  .booking-done__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  .pulse,
+  .hero__scroll span::after,
+  .booking-submit__ring {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

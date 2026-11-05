@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0c" />
+    <title>Nexus Arena · Premium internet kafe</title>
+    <meta
+      name="description"
+      content="Sıradan bir internet kafe değil. Espor seviyesinde donanım, fiber altyapı ve premium bir atmosferle oyun deneyimini zirveye taşı."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nexus Arena" />
+    <meta property="og:title" content="Nexus Arena · Premium internet kafe" />
+    <meta
+      property="og:description"
+      content="Sıradan bir internet kafe değil. Espor seviyesinde donanım, fiber altyapı ve premium bir atmosferle oyun deneyimini zirveye taşı."
+    />
+    <meta property="og:locale" content="tr_TR" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="assets/img/projeler/nexus-arena.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="assets/css/projeler/nexus-arena/core.css" />
+    <link rel="stylesheet" href="assets/css/projeler/nexus-arena/site.css" />
+
+    <!-- Asıl uygulama: ASP.NET Core Razor Pages. Bu demo aynı arayüzü statik olarak sunar;
+         içerik ve rezervasyonlar tarayıcıdaki ortak demo verisinden gelir (admin paneliyle paylaşılır). -->
+    <script src="assets/js/projeler/nexus-arena/boot.js"></script>
+    <script src="assets/vendor/gsap-3.15.0/gsap.min.js" defer></script>
+    <script src="assets/vendor/gsap-3.15.0/ScrollTrigger.min.js" defer></script>
+    <script src="assets/vendor/gsap-3.15.0/SplitText.min.js" defer></script>
+    <script src="assets/vendor/lenis-1.3.26/lenis.min.js" defer></script>
+    <script type="module" src="assets/js/projeler/nexus-arena/site.js"></script>
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#icerik">İçeriğe geç</a>
+    <div class="loader" data-loader aria-hidden="true">
+      <div class="loader__row mono">
+        <span>Nexus Arena</span>
+        <span>Bağlantı kuruluyor</span>
+      </div>
+      <div class="loader__count" data-loader-count>000</div>
+      <div class="loader__bar"><span data-loader-bar></span></div>
+    </div>
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html" aria-label="Nexus Arena ana sayfa">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span>Nexus<span class="brand__slash">/</span>Arena</span>
+      </a>
+      <nav class="site-nav" aria-label="Ana menü">
+        <a href="#sistemler"><span>01</span>Sistemler</a>
+        <a href="#oyunlar"><span>02</span>Oyunlar</a>
+        <a href="#fiyatlar"><span>03</span>Fiyatlar</a>
+        <a href="#rezervasyon"><span>04</span>Rezervasyon</a>
+      </nav>
+      <p class="header-status mono">
+        <span class="pulse" aria-hidden="true"></span>
+        <span><strong>40</strong> PC boş</span>
+      </p>
+      <a class="btn btn--volt header-cta" href="#rezervasyon" data-magnetic>
+        <span class="roll" data-text="Yer ayırt"><span>Yer ayırt</span></span>
+      </a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menüyü aç</span>
+        <span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </header>
+    <div class="site-menu" id="site-menu" data-menu hidden>
+      <nav class="site-menu__nav" aria-label="Mobil menü">
+        <ol>
+          <li>
+            <a href="#sistemler">
+              <span class="site-menu__index mono">01</span>
+              <span class="site-menu__mask"
+                ><span class="site-menu__label" data-menu-link>Sistemler</span></span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#oyunlar">
+              <span class="site-menu__index mono">02</span>
+              <span class="site-menu__mask"
+                ><span class="site-menu__label" data-menu-link>Oyunlar</span></span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#fiyatlar">
+              <span class="site-menu__index mono">03</span>
+              <span class="site-menu__mask"
+                ><span class="site-menu__label" data-menu-link>Fiyatlar</span></span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="#rezervasyon">
+              <span class="site-menu__index mono">04</span>
+              <span class="site-menu__mask"
+                ><span class="site-menu__label" data-menu-link>Rezervasyon</span></span
+              >
+            </a>
+          </li>
+        </ol>
+      </nav>
+      <div class="site-menu__foot">
+        <p class="mono"><span class="pulse" aria-hidden="true"></span> 40 / 40 PC boş</p>
+        <ul class="site-menu__links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">İletişim</a></li>
+        </ul>
+      </div>
+    </div>
+    <main id="icerik">
+      <section class="hero" data-hero>
+        <canvas class="hero__field" data-field aria-hidden="true"></canvas>
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__inner">
+          <div class="hero__top mono" data-hero-fade>
+            <p>Premium internet kafe · Espor standartlarında</p>
+            <p class="hero__scroll" aria-hidden="true">Kaydır <span></span></p>
+          </div>
+          <h1 class="hero__title" data-hero-title>
+            <span class="hero__line">Düşük ping</span>
+            <span class="hero__line hero__line--end">Yüksek FPS</span>
+          </h1>
+          <div class="hero__foot">
+            <div class="hero__copy" data-hero-fade>
+              <p class="hero__lead">
+                Sıradan bir internet kafe değil. Espor seviyesinde donanım, fiber altyapı ve premium
+                bir atmosferle oyun deneyimini zirveye taşı.
+              </p>
+              <div class="hero__actions">
+                <a class="btn btn--volt btn--lg" href="#rezervasyon" data-magnetic>
+                  <span class="roll" data-text="Yerini ayırt"><span>Yerini ayırt</span></span>
+                  <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </a>
+                <a class="link-roll link-roll--muted" href="#sistemler"
+                  ><span class="roll" data-text="Sistemleri gör"
+                    ><span>Sistemleri gör</span></span
+                  ></a
+                >
+              </div>
+            </div>
+            <dl class="hud" data-hero-fade style="--hud-items: 4">
+              <div class="hud__item">
+                <dt>Yerel saat</dt>
+                <dd data-clock>--:--:--</dd>
+              </div>
+              <div class="hud__item">
+                <dt><span class="pulse" aria-hidden="true"></span>Sunucuya ping</dt>
+                <dd><span data-ping>--</span> ms</dd>
+              </div>
+              <div class="hud__item">
+                <dt>Açık</dt>
+                <dd>7/24</dd>
+              </div>
+              <div class="hud__item">
+                <dt>Boş PC</dt>
+                <dd data-hud-seats>40<span class="hud__dim">/40</span></dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+      <section class="section hardware" id="sistemler">
+        <header class="section-head">
+          <p class="section-head__index mono">(01)</p>
+          <h2 class="section-title" data-split>Donanım cephaneliği</h2>
+          <p class="section-intro" data-reveal>
+            İki sınıf, tek standart: her masada rekabetçi oyunun gerektirdiği her şey. Aşağı kaydır,
+            sistemleri parça parça incele.
+          </p>
+        </header>
+        <article class="tier" data-tier>
+          <div class="tier__stage">
+            <div class="tier__stage-inner">
+              <p class="tier__label mono">
+                <span class="tier__dot" aria-hidden="true"></span>Pro-Esports oda
+              </p>
+              <h3 class="tier__name">VIP Sistem</h3>
+              <div class="tier__readout" aria-hidden="true">
+                <p class="tier__figure" data-figure>RTX 4090</p>
+                <p class="tier__detail mono" data-detail>24 GB GDDR6X</p>
+              </div>
+              <div class="tier__meter" aria-hidden="true">
+                <span data-meter style="--progress: 0.333"></span>
+              </div>
+              <p class="tier__count mono" aria-hidden="true"><span data-count>01</span> / 03</p>
+            </div>
+          </div>
+          <ol class="tier__specs">
+            <li class="spec" data-spec data-figure="RTX 4090" data-detail="24 GB GDDR6X">
+              <p class="spec__cat mono">Ekran kartı</p>
+              <p class="spec__figure" aria-hidden="true">RTX 4090</p>
+              <h4 class="spec__title">NVIDIA GeForce RTX 4090</h4>
+              <p class="spec__desc">
+                En ağır oyunları en yüksek ayarlarda, kare kaybı yaşamadan oynatan amiral gemisi.
+              </p>
+            </li>
+            <li class="spec" data-spec data-figure="i9-14900K" data-detail="24 çekirdek · 6.0 GHz">
+              <p class="spec__cat mono">İşlemci</p>
+              <p class="spec__figure" aria-hidden="true">i9-14900K</p>
+              <h4 class="spec__title">Intel Core i9-14900K</h4>
+              <p class="spec__desc">Oyun, yayın ve kayıt aynı anda açıkken bile takılma yok.</p>
+            </li>
+            <li class="spec" data-spec data-figure="360 Hz" data-detail="1 ms · Zowie espor">
+              <p class="spec__cat mono">Monitör</p>
+              <p class="spec__figure" aria-hidden="true">360 Hz</p>
+              <h4 class="spec__title">360 Hz Zowie espor monitörü</h4>
+              <p class="spec__desc">
+                Saniyede 360 kare, 1 ms tepki süresi. Rakibini bir kare önce gör.
+              </p>
+            </li>
+          </ol>
+        </article>
+        <article class="tier" data-tier>
+          <div class="tier__stage">
+            <div class="tier__stage-inner">
+              <p class="tier__label mono">
+                <span class="tier__dot" aria-hidden="true"></span>Ana salon
+              </p>
+              <h3 class="tier__name">Standart Plus</h3>
+              <div class="tier__readout" aria-hidden="true">
+                <p class="tier__figure" data-figure>RTX 4060 Ti</p>
+                <p class="tier__detail mono" data-detail>NVIDIA GeForce</p>
+              </div>
+              <div class="tier__meter" aria-hidden="true">
+                <span data-meter style="--progress: 0.333"></span>
+              </div>
+              <p class="tier__count mono" aria-hidden="true"><span data-count>01</span> / 03</p>
+            </div>
+          </div>
+          <ol class="tier__specs">
+            <li class="spec" data-spec data-figure="RTX 4060 Ti" data-detail="NVIDIA GeForce">
+              <p class="spec__cat mono">Ekran kartı</p>
+              <p class="spec__figure" aria-hidden="true">RTX 4060 Ti</p>
+              <h4 class="spec__title">NVIDIA GeForce RTX 4060 Ti</h4>
+              <p class="spec__desc">
+                Rekabetçi oyunlarda yüksek FPS, günlük oyunda rahat bir performans.
+              </p>
+            </li>
+            <li class="spec" data-spec data-figure="7600X" data-detail="6 çekirdek · 5.3 GHz">
+              <p class="spec__cat mono">İşlemci</p>
+              <p class="spec__figure" aria-hidden="true">7600X</p>
+              <h4 class="spec__title">AMD Ryzen 5 7600X</h4>
+              <p class="spec__desc">
+                Yüksek saat hızıyla rekabetçi oyunların aradığı tepki süresi.
+              </p>
+            </li>
+            <li class="spec" data-spec data-figure="165 Hz" data-detail="IPS panel">
+              <p class="spec__cat mono">Monitör</p>
+              <p class="spec__figure" aria-hidden="true">165 Hz</p>
+              <h4 class="spec__title">165 Hz IPS monitör</h4>
+              <p class="spec__desc">Canlı renkler ve akıcı bir görüntü, uzun seanslarda bile.</p>
+            </li>
+          </ol>
+        </article>
+        <div class="gear">
+          <p class="gear__label mono" data-reveal>Ekipman</p>
+          <ul class="gear__list">
+            <li class="gear__item" data-reveal>
+              <p class="mono">Mouse</p>
+              <p class="gear__name">Logitech G Pro X Superlight</p>
+              <p class="gear__detail">Ultra hafif, kablosuz</p>
+            </li>
+            <li class="gear__item" data-reveal>
+              <p class="mono">Kulaklık</p>
+              <p class="gear__name">HyperX Cloud II</p>
+              <p class="gear__detail">7.1 surround ses</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="section games" id="oyunlar">
+        <header class="section-head">
+          <p class="section-head__index mono">(02)</p>
+          <h2 class="section-title" data-split>Yüklü oyunlar</h2>
+          <p class="section-intro" data-reveal>
+            Popüler oyunlar her makinede kurulu ve güncel. Otur, giriş yap, oyna.
+          </p>
+        </header>
+        <ul class="sr-only">
+          <li>Valorant</li>
+          <li>CS2</li>
+          <li>League of Legends</li>
+          <li>Apex Legends</li>
+          <li>PUBG</li>
+          <li>GTA V</li>
+          <li>Rust</li>
+        </ul>
+        <div class="marquee" data-marquee="1" aria-hidden="true">
+          <div class="marquee__track">
+            <div class="marquee__group">
+              <span class="marquee__item"
+                ><span lang="en">Valorant</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">CS2</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">League of Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Apex Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">PUBG</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">GTA V</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Rust</span><i class="marquee__sep"></i
+              ></span>
+            </div>
+            <div class="marquee__group">
+              <span class="marquee__item"
+                ><span lang="en">Valorant</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">CS2</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">League of Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Apex Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">PUBG</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">GTA V</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Rust</span><i class="marquee__sep"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+        <div class="marquee marquee--outline" data-marquee="-1" aria-hidden="true">
+          <div class="marquee__track">
+            <div class="marquee__group">
+              <span class="marquee__item"
+                ><span lang="en">Rust</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">GTA V</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">PUBG</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Apex Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">League of Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">CS2</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Valorant</span><i class="marquee__sep"></i
+              ></span>
+            </div>
+            <div class="marquee__group">
+              <span class="marquee__item"
+                ><span lang="en">Rust</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">GTA V</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">PUBG</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Apex Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">League of Legends</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">CS2</span><i class="marquee__sep"></i
+              ></span>
+              <span class="marquee__item"
+                ><span lang="en">Valorant</span><i class="marquee__sep"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section prices" id="fiyatlar">
+        <header class="section-head">
+          <p class="section-head__index mono">(03)</p>
+          <h2 class="section-title" data-split>Fiyatlar</h2>
+          <p class="section-intro" data-reveal>
+            Saatlik oyna ya da paket seç. Uzun seanslarda paketler saatlik tarifeden daha avantajlı.
+          </p>
+        </header>
+        <div class="price-grid">
+          <article class="price-card" data-reveal>
+            <header class="price-card__head">
+              <p class="price-card__label mono">
+                <span class="tier__dot" aria-hidden="true"></span>Pro-Esports oda
+              </p>
+              <h3 class="price-card__name">VIP Sistem</h3>
+            </header>
+            <div class="price-card__rate">
+              <p class="price-card__figure" data-count-to="120.0" data-decimals="0">₺120</p>
+              <p class="price-card__unit mono">/ saat</p>
+            </div>
+            <p class="price-card__subhead mono">Paketler</p>
+            <ul class="packages">
+              <li class="package">
+                <span class="package__name">3 saat</span>
+                <span class="package__leader" aria-hidden="true"></span>
+                <span class="package__saving mono">%11 avantaj</span>
+                <span class="package__price">₺320</span>
+              </li>
+              <li class="package">
+                <span class="package__name">Gece paketi</span>
+                <span class="package__leader" aria-hidden="true"></span>
+                <span class="package__duration mono">8 saat</span>
+                <span class="package__saving mono">%37 avantaj</span>
+                <span class="package__price">₺600</span>
+              </li>
+            </ul>
+          </article>
+          <article class="price-card" data-reveal>
+            <header class="price-card__head">
+              <p class="price-card__label mono">
+                <span class="tier__dot" aria-hidden="true"></span>Ana salon
+              </p>
+              <h3 class="price-card__name">Standart Plus</h3>
+            </header>
+            <div class="price-card__rate">
+              <p class="price-card__figure" data-count-to="70.0" data-decimals="0">₺70</p>
+              <p class="price-card__unit mono">/ saat</p>
+            </div>
+            <p class="price-card__subhead mono">Paketler</p>
+            <ul class="packages">
+              <li class="package">
+                <span class="package__name">3 saat</span>
+                <span class="package__leader" aria-hidden="true"></span>
+                <span class="package__saving mono">%9 avantaj</span>
+                <span class="package__price">₺190</span>
+              </li>
+              <li class="package">
+                <span class="package__name">5 saat</span>
+                <span class="package__leader" aria-hidden="true"></span>
+                <span class="package__saving mono">%14 avantaj</span>
+                <span class="package__price">₺300</span>
+              </li>
+              <li class="package">
+                <span class="package__name">Gece paketi</span>
+                <span class="package__leader" aria-hidden="true"></span>
+                <span class="package__duration mono">8 saat</span>
+                <span class="package__saving mono">%28 avantaj</span>
+                <span class="package__price">₺400</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+      <section class="section booking" id="rezervasyon">
+        <header class="booking__head">
+          <p class="booking__index mono">(04) Rezervasyon</p>
+          <h2 class="booking__title" data-split>
+            <span>Yerini</span>
+            <span>ayırt.</span>
+          </h2>
+          <p class="booking__intro" data-reveal>
+            Sistemi, günü ve saati seç; talebini gönder. Ekibimiz onaylayınca PC'n seni bekler.
+          </p>
+        </header>
+        <div class="booking__body" data-booking-body>
+          <p class="booking-closed">
+            Rezervasyon formu JavaScript ile çalışır. Tarayıcında JavaScript'i açıp sayfayı yenile.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="mono">Nexus Arena</p>
+          <p>7/24 kesintisiz oyun deneyimi.</p>
+        </div>
+        <ul class="footer-links">
+          <li>
+            <a href="#" class="link-roll">
+              <span class="roll" data-text="Instagram"><span>Instagram</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="link-roll">
+              <span class="roll" data-text="Discord"><span>Discord</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="link-roll">
+              <span class="roll" data-text="İletişim"><span>İletişim</span></span>
+            </a>
+          </li>
+        </ul>
+        <p class="footer-copy mono">© 2026 Nexus Arena</p>
+      </div>
+      <div class="footer-mark" aria-hidden="true" style="--chars: 11">Nexus Arena</div>
+    </footer>
+    <div class="cursor" data-cursor aria-hidden="true"><span class="cursor__ring"></span></div>
+  </body>
+</html>
